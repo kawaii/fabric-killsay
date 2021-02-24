@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.rerebla.killsayclient.killsayclientside.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "chatMessageMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "killsayclientside",
+  "version": "${version}",
+
+  "name": "Kill Say",
+  "description": "A mod that prints a custom message after killing a player.",
+  "authors": [
+    "Rerebla"
+  ],
+  "contact": {
+    "website": "https://www.fiverr.com/rerebla"
+  },
+
+  "license": "MIT",
+  "icon": "assets/killsayclientside/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "modmenu": [
+      "me.rerebla.killsayclient.killsayclientside.client.ConfigScreen"
+    ],
+    "client": [
+      "me.rerebla.killsayclient.killsayclientside.client.KillsayclientsideClient"
+    ],
+    "main": [
+      "me.rerebla.killsayclient.killsayclientside.Killsayclientside"
+    ]
+  },
+
+  "mixins": [
+        "killsayclientside.mixins.json"
+      ],
+
+  "depends": {
+    "fabricloader": ">=0.11.1",
+              "fabric": "*",
+          "minecraft": "1.16.5",
+          "cloth-config2": ">=2-4.8.3",
+          "modmenu": ">=1.14.15"
+  }
+}
