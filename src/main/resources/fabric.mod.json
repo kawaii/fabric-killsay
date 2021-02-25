@@ -9,10 +9,11 @@
     "Rerebla"
   ],
   "contact": {
-    "website": "https://www.fiverr.com/rerebla"
+    "homepage": "https://www.fiverr.com/rerebla",
+    "issues": "https://github.com/kawaii/fabric-killsay"
   },
 
-  "license": "MIT",
+  "license": "BSD 3-clause licence",
   "icon": "assets/killsayclientside/icon.png",
 
   "environment": "client",

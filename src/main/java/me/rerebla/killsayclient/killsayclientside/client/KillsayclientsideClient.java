@@ -28,7 +28,7 @@ public class KillsayclientsideClient implements ClientModInitializer, ModMenuApi
         });
         ConfigScreen.loadConfig();
     }
-
+    //Get a random String from the chatOptions to print in the chat
     public String randomString(){
         Random generator = new Random();
         int randomIndex = generator.nextInt(ConfigScreen.config.chatOptions.size());

@@ -13,7 +13,9 @@ import net.minecraft.text.LiteralText;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class ConfigScreen implements ModMenuApi {
     ConfigBuilder builder = ConfigBuilder.create()
             .setParentScreen(parent)
             .setTitle(new LiteralText("KillSay Config"));
-
+        //Saving
         builder.setSavingRunnable(() -> {
         try {
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -36,32 +38,38 @@ public class ConfigScreen implements ModMenuApi {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        //Saving
     });
     ConfigEntryBuilder entryBuilder = builder.entryBuilder();
     ConfigCategory general = builder.getOrCreateCategory(new LiteralText("General"));
-        general.addEntry(entryBuilder.startIntField(new LiteralText("Chance to trigger"), config.chance)
+
+    //Config Entry for the trigger-chance
+    general.addEntry(entryBuilder.startIntField(new LiteralText("Chance to trigger"), config.chance)
             .setTooltip(new LiteralText("At which percentage the chat-event triggers"))
             .setDefaultValue(100)
             .setSaveConsumer(newVal -> {
                 System.out.println(newVal);
-
                 config.chance = newVal;
     }).build());
+
+    //Config Entry for the chatOptions
     general.addEntry(entryBuilder.startStrList(new LiteralText("Chat options"), config.chatOptions)
-    .setTooltip(new LiteralText("The chat options. Format attacker and target like this: <<attacker>> <<target>>"))
-    .setDefaultValue(new ArrayList<>())
-    .setInsertInFront(false)
-    .setSaveConsumer(newStrListVal ->{
-        System.out.println(newStrListVal);
-        config.chatOptions.clear();
-        config.chatOptions.addAll(newStrListVal);
+        .setTooltip(new LiteralText("The chat options. Format attacker and target like this: <<attacker>> <<target>>"))
+        .setDefaultValue(new ArrayList<>())
+        .setInsertInFront(false)
+        .setSaveConsumer(newStrListVal ->{
+            System.out.println(newStrListVal);
+            config.chatOptions.clear();
+            config.chatOptions.addAll(newStrListVal);
     }).build());
+
+    //Config Entry for the generalControl
     general.addEntry(entryBuilder.startBooleanToggle(new LiteralText("Toggle"), config.generalControl)
-    .setTooltip(new LiteralText("Toggle to dis/enable the mod completely"))
-    .setDefaultValue(true)
-    .setSaveConsumer(newBoolVal ->{
-        System.out.println(newBoolVal);
-        config.generalControl = newBoolVal;
+        .setTooltip(new LiteralText("Toggle to dis/enable the mod completely"))
+        .setDefaultValue(true)
+        .setSaveConsumer(newBoolVal ->{
+            System.out.println(newBoolVal);
+            config.generalControl = newBoolVal;
     }).build());
         return builder.build();
     }
@@ -69,6 +77,8 @@ public class ConfigScreen implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return this::createConfig;
     }
+
+    //Get's executed when initializing the mod and loads the config data from the json file
     public static void loadConfig() {
         try {
             String file = String.valueOf(FabricLoader.getInstance().getConfigDir().resolve("config_kill_say.json"));
@@ -78,8 +88,8 @@ public class ConfigScreen implements ModMenuApi {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             config = gson.fromJson(dataStr, Config.class);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
